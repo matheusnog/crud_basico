@@ -31,3 +31,4 @@ Route::delete('/users/{id}', [UsersController::class, 'delete']);
 Route::get('/produtos', [ProdutosController::class, 'getAll']);
 Route::get('/produtos/{id}', [ProdutosController::class, 'get']);
 Route::post('/produtos', [ProdutosController::class, 'post']);
+Route::delete('/produtos/{id}', [ProdutosController::class, 'delete']);

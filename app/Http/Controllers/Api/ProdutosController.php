@@ -27,4 +27,18 @@ class ProdutosController extends Controller
             'message'=>'Produto criado com sucesso!',
             'data'=>$produto],200);
     }
+
+    public function delete($id){
+        $produto = Produto::find($id);
+        if(is_object($produto)){
+            $produto->delete();
+            return response()->json([
+                'message'=>'Produto deletado com sucesso!',
+                'data'=>$produto],200);
+        }else{
+            return response()->json([
+                'message'=>'Não foi possível deletar o usuario!',
+                'data'=>''],404);
+        }
+    }
 }

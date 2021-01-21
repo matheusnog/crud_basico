@@ -45,6 +45,7 @@ function cadastraProduto()
     //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     success : function(data) {
       console.log(data)
+      alert("Produto cadastrado com sucesso")
     },
     error: function(){
         alert("Erro ao realizar a requisicao")
