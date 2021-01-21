@@ -15,17 +15,17 @@
         <form action="" method="POST">
             @csrf
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nome</label>
                 <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Nome">
             </div>
             <div class="form-group">
-                <label for="preco">Code</label>
-                <input type="number" class="form-control" id="code" placeholder="code">
+                <label for="preco">Código</label>
+                <input type="number" class="form-control" id="code" placeholder="Código">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="codigo">Current amount</label>
-                <input type="text" class="form-control" name="current_amount" id="current_amount" placeholder="Código">
-            </div>
+                <input type="text" class="form-control" name="current_amount" id="current_amount" placeholder="Current amount">
+            </div> -->
             <input type="button" class="btn btn-primary" onclick="cadastraProduto()" value="Cadastrar" />
             <a href="/products/list" class="btn btn-outline-primary">Voltar</a>
         </form>
@@ -36,7 +36,7 @@
     function cadastraProduto() {
         var name = $("#name").val()
         var code = $("#code").val()
-        var current_amount = $("#current_amount").val()
+        // var current_amount = $("#current_amount").val()
 
         $.ajax({
             type: "POST",
@@ -45,7 +45,7 @@
             data: {
                 'name': name,
                 'code': code,
-                'current_amount': current_amount
+                // 'current_amount': current_amount
             },
             success: function(data) {
                 console.log(data)

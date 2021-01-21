@@ -14,15 +14,15 @@
     <div class="col-md-10 offset-md-1">
         <h1 class="text-center">Products</h1>
         <div class="text-center m-3">
-            <a class="btn btn-primary" href="/products/new">New product</a>
+            <a class="btn btn-primary" href="/products/new">Novo produto</a>
         </div>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Code</th>
-                    <th scope="col">Current amount</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Quantidade atual</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -68,8 +68,8 @@
                     $table += "<td>" + u.name + "</td>";
                     $table += "<td>" + u.code + "</td>";
                     $table += "<td>" + u.current_amount + "</td>";
-                    $table += "<td><a class='btn btn-primary' href='/products/edit/" + u.id + "'>Edit</a> ";
-                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Delete</button></td>";
+                    $table += "<td><a class='btn btn-primary' href='/products/edit/" + u.id + "'>Editar</a> ";
+                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button></td>";
                     $table += "</tr>";
 
                     $('#tabela-corpo').append($table);
