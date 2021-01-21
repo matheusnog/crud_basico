@@ -10,7 +10,7 @@
 <body>
     <div class="col-md-6 offset-md-3">
         <h1 class="text-center">Cadastrar produto</h1>
-        <form action="{{ route('cadastrar_produto') }}" method="POST">
+        <form action="" method="POST">
             @csrf
             <div class="form-group">
                 <label for="name">Nome</label>
@@ -22,11 +22,10 @@
             </div>
             <div class="form-group">
                 <label for="codigo">Código</label>
-                <input type="text" class="form-control" name="codigo" placeholder="Código">
+                <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código">
             </div>
             <input type="button" class="btn btn-primary" onclick="cadastraProduto()" value="Cadastrar" />
             <a href="/produtos/lista" class="btn btn-outline-primary">Voltar</a>
-
         </form>
     </div>
     
@@ -34,20 +33,21 @@
 <script>
 function cadastraProduto()
 {
-    var name = $("#nome").val()
+    var nome = $("#nome").val()
     var preco = $("#preco").val()
+    var codigo = $("#codigo").val()
 
   $.ajax({
     type : "POST",
-    url : 'http://127.0.0.1:8002/api/produtos',
+    url : 'http://127.0.0.1:8000/api/produtos',
     dataType: 'json',
-    data : {'name': name, 'preco': preco},
+    data : {'nome': nome, 'preco': preco, 'codigo': codigo},
     //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     success : function(data) {
       console.log(data)
     },
     error: function(){
-        alert("Erro ao realizr  requisicao")
+        alert("Erro ao realizar a requisicao")
     }
   });
 }

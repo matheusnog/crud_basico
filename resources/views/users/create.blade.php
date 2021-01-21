@@ -61,7 +61,7 @@ function cadastraUsuario()
             var password = $("#password").val()
             $.ajax({
                 type: "POST",
-                url: 'http://127.0.0.1:8002/api/users/',
+                url: 'http://127.0.0.1:8000/api/users/',
                 dataType: 'json',
                 data: {
                     'name': name,

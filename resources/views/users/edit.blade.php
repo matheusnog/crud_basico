@@ -41,7 +41,7 @@
         var password = $("#password").val()
         $.ajax({
             type: "PUT",
-            url: 'http://127.0.0.1:8002/api/users/'+ id,
+            url: 'http://127.0.0.1:8000/api/users/'+ id,
             dataType: 'json',
             data: {
                 'name': name,

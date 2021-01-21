@@ -71,7 +71,7 @@
   function carregarTabela() {
     $.ajax({
       type: "GET",
-      url: 'http://127.0.0.1:8002/api/users',
+      url: 'http://127.0.0.1:8000/api/users',
       dataType: 'json',
       //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       success: function(data) {
@@ -104,7 +104,7 @@
     var id = $("#id-hidden").val()
     $.ajax({
       type: "delete",
-      url: 'http://127.0.0.1:8002/api/users/' + id,
+      url: 'http://127.0.0.1:8000/api/users/' + id,
       dataType: 'json',
       //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       success: function(data) {
