@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,8 @@ Route::get('produtos/editar/{id}', [ProdutosController::class, 'edit']);
 Route::post('produtos/editar/{id}', [ProdutosController::class, 'update'])->name('editar_produto');
 Route::get('produtos/excluir/{id}', [ProdutosController::class, 'delete']);
 Route::post('produtos/excluir/{id}', [ProdutosController::class, 'destroy'])->name('excluir_produto');
+
+// products
+Route::get('products/new', [ProductsController::class, 'create']);
+Route::get('products/list', [ProductsController::class, 'list']);
+Route::get('products/edit/{id}', [ProductsController::class, 'edit']);

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\ProdutosController;
+use App\Http\Controllers\Api\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,9 @@ Route::get('/produtos', [ProdutosController::class, 'getAll']);
 Route::get('/produtos/{id}', [ProdutosController::class, 'get']);
 Route::post('/produtos', [ProdutosController::class, 'post']);
 Route::delete('/produtos/{id}', [ProdutosController::class, 'delete']);
+
+// products
+Route::post('/products', [ProductsController::class, 'post']);
+Route::get('/products', [ProductsController::class, 'getAll']);
+Route::delete('/products/{id}', [ProductsController::class, 'delete']);
+Route::put('/products/{id}', [ProductsController::class, 'put']);

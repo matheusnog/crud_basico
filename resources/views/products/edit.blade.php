@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 </head>
+
 <body>
     <div class="col-md-6 offset-md-3">
-        <h1 class="text-center">Editar produto</h1>
+        <h1 class="text-center">Editar product</h1>
         <form action="" method="POST">
             @csrf
             <div class="form-group">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control" name="nome" value="{{ $produto->nome }}" placeholder="Nome">
+                <input type="text" class="form-control" name="name" id="name" value="{{ $product->name }}" placeholder="Name">
             </div>
             <div class="form-group">
                 <label for="preco">Preço</label>
-                <input type="text" class="form-control" name="preco" value="{{ $produto->preco }}" placeholder="Preço">
+                <input type="text" class="form-control" name="code" id="code" value="{{ $product->code }}" placeholder="Code">
             </div>
             <div class="form-group">
                 <label for="codigo">Código</label>
-                <input type="text" class="form-control" name="codigo" value="{{ $produto->codigo }}" placeholder="Código">
+                <input type="text" class="form-control" name="current_amount" id="current_amount" value="{{ $product->current_amount }}" placeholder="Código">
             </div>
-            <input type="button" class="btn btn-primary" onclick="editarProduto()" value="Editar" />
-            <a href="/produtos/lista" class="btn btn-outline-primary">Voltar</a>
-
+            <input type="button" class="btn btn-primary" onclick="editProduct()" value="Editar" />
+            <a href="/products/lista" class="btn btn-outline-primary">Voltar</a>
         </form>
     </div>
-    
+    <input type="hidden" id="id-hidden">
+
 </body>
 
 <script>
-    function editarProduto() {
+    function editProduct() {
         var id = $("#id-hidden").val()
-        var nome = $("#nome").val()
-        var preco = $("#preco").val()
-        var codigo = $("#codigo").val()
+        var name = $("#name").val()
+        var code = $("#code").val()
+        var current_amount = $("#current_amount").val()
         $.ajax({
             type: "PUT",
-            url: 'http://127.0.0.1:8000/api/users/'+ id,
+            url: 'http://127.0.0.1:8000/api/products/' + id,
             dataType: 'json',
             data: {
                 'name': name,
-                'email': email,
-                'password': password,
+                'code': code,
+                'current_amount': current_amount,
             },
-            //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function(data) {
                 console.log(data)
-                alert("Usuário editado com sucesso")
+                alert("Produto editado com sucesso")
             },
             error: function() {
-                alert("Erro ao realizar  requisicao")
+                alert("Erro ao realizar a requisicao")
             }
         });
     }
 </script>
+
 </html>

@@ -83,7 +83,7 @@
           $table += "<td>" + u.nome + "</td>";
           $table += "<td>" + u.preco + "</td>";
           $table += "<td>" + u.codigo + "</td>";
-          $table += "<td><a class='btn btn-primary' href='/users/editar/" + u.id + "'>Editar</a> ";
+          $table += "<td><a class='btn btn-primary' href='/produtos/editar/" + u.id + "'>Editar</a> ";
           $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button></td>";
           $table += "</tr>";
 
