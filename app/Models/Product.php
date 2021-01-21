@@ -14,4 +14,8 @@ class Product extends Model
         'code',
         'current_amount',
     ];
+
+    public function input(){
+        return $this->belongsTo(Input::class);
+    }
 }

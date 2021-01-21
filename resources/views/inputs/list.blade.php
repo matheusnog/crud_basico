@@ -23,6 +23,7 @@
             <thead>
                 <tr>
                     <th scope="col">Data</th>
+                    <th scope="col">Produto</th>
                     <th scope="col">Valor total</th>
                     <th scope="col">Valor unitário</th>
                     <th scope="col">Quantidade</th>
@@ -65,10 +66,11 @@
             dataType: 'json',
             success: function(data) {
                 data.map(u => {
-                    console.log("u --> ", u.before_amount)
+                    console.log("u --> ", u)
 
                     $table = "<tr>";
                     $table += "<td>" + u.date + "</td>";
+                    $table += "<td>" + u.product + "</td>";
                     $table += "<td>" + u.total_value + "</td>";
                     $table += "<td class='unitary-value'>" + u.unitary_value + "</td>";
                     $table += "<td>" + u.amount + "</td>";

@@ -21,6 +21,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th scope="col">Id</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Código</th>
                     <th scope="col">Quantidade atual</th>
@@ -66,6 +67,7 @@
                     console.log("u --> ", u.name)
 
                     $table = "<tr>";
+                    $table += "<td>" + u.id + "</td>";
                     $table += "<td>" + u.name + "</td>";
                     $table += "<td>" + u.code + "</td>";
                     $table += "<td>" + u.current_amount + "</td>";
