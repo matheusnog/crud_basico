@@ -20,7 +20,7 @@ class ProductsController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->code = $request->code;
-        // $product->current_amount = $request->current_amount;
+        $product->current_amount = 0;
         $product->save();
 
         return response()->json([

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\ProdutosController;
 use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\InputsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,7 @@ Route::post('/products', [ProductsController::class, 'post']);
 Route::get('/products', [ProductsController::class, 'getAll']);
 Route::delete('/products/{id}', [ProductsController::class, 'delete']);
 Route::put('/products/{id}', [ProductsController::class, 'put']);
+
+// inputs
+Route::get('/inputs', [InputsController::class, 'getAll']);
+Route::post('/inputs', [InputsController::class, 'post']);

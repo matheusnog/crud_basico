@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\InputsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,7 @@ Route::post('produtos/excluir/{id}', [ProdutosController::class, 'destroy'])->na
 Route::get('products/new', [ProductsController::class, 'create']);
 Route::get('products/list', [ProductsController::class, 'list']);
 Route::get('products/edit/{id}', [ProductsController::class, 'edit']);
+
+// inputs
+Route::get('inputs/list', [InputsController::class, 'list']);
+Route::get('inputs/new', [InputsController::class, 'create']);

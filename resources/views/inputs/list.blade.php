@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -12,18 +13,19 @@
 
 <body>
     <div class="col-md-10 offset-md-1">
-        <h1 class="text-center">Produtos</h1>
+        <h1 class="text-center">Entradas</h1>
         <div class="text-center m-3">
-            <a class="btn btn-primary" href="/products/new">Novo produto</a>
-            <a class="btn btn-outline-primary" href="/inputs/list">Entradas</a>
+            <a class="btn btn-primary" href="/inputs/new">Nova entrada</a>
+            <a class="btn btn-outline-primary" href="/products/list">Produtos</a>
         </div>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Quantidade atual</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Valor total</th>
+                    <th scope="col">Valor unitário</th>
+                    <th scope="col">Quantidade</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -59,16 +61,17 @@
     function carregarTabela() {
         $.ajax({
             type: "GET",
-            url: 'http://127.0.0.1:8000/api/products',
+            url: 'http://127.0.0.1:8000/api/inputs',
             dataType: 'json',
             success: function(data) {
                 data.map(u => {
-                    console.log("u --> ", u.name)
+                    console.log("u --> ", u.before_amount)
 
                     $table = "<tr>";
-                    $table += "<td>" + u.name + "</td>";
-                    $table += "<td>" + u.code + "</td>";
-                    $table += "<td>" + u.current_amount + "</td>";
+                    $table += "<td>" + u.date + "</td>";
+                    $table += "<td>" + u.total_value + "</td>";
+                    $table += "<td class='unitary-value'>" + u.unitary_value + "</td>";
+                    $table += "<td>" + u.amount + "</td>";
                     $table += "<td><a class='btn btn-primary' href='/products/edit/" + u.id + "'>Editar</a> ";
                     $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button></td>";
                     $table += "</tr>";
