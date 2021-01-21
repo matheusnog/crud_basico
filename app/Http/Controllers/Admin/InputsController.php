@@ -16,4 +16,9 @@ class InputsController extends Controller
         $input = Input::all();
         return view('inputs.list', ['input' => $input]);
     }
+
+    public function show($id){
+        $input = Input::find($id);
+        return view('inputs.show', ['input' => $input]);
+    }
 }
