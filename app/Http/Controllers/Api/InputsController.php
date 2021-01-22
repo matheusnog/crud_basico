@@ -21,7 +21,7 @@ class InputsController extends Controller
         $input->amount = $request->amount;
         $input->date = $request->date;
         $input->unitary_value = $request->unitary_value;
-        $input->total_value = $request->unitary_value * $request->amount;        
+        $input->total_value = $request->unitary_value * $request->amount;
 
         $product = Product::find($request->product);
         $input->after_amount = $product->current_amount + $request->amount;
@@ -78,16 +78,15 @@ class InputsController extends Controller
                 $input->after_amount = $newProduct->current_amount;
 
                 $newProduct->save();
-                
             } else {
                 // alterando os valores do mesmo produto
                 $product = Product::find($request->product);
-                
+
                 $input->after_amount = $input->before_amount + $request->amount;
                 $product->current_amount = $input->after_amount;
                 $product->save();
             }
-            
+
             $input->amount = $request->amount;
             $input->date = $request->date;
             $input->unitary_value = $request->unitary_value;

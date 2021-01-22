@@ -16,7 +16,7 @@
         <h1 class="text-center">Nova entrada</h1>
         <form action="" method="POST">
             @csrf
-            <div class="form-group">
+            <div class="form-group option">
                 <label for="name">Produto</label>
                 <select name="products" class="form-control" id="products">
                 </select>
@@ -34,7 +34,7 @@
                 <input type="text" class="form-control" id="unitary-value" placeholder="Valor unitário" value="{{ number_format($input->unitary_value, 2, '.', '') }}">
             </div>
             <input type="hidden" id="id-hidden" value="{{ $input->id }}">
-            <!-- <input type="text" value="{{ number_format($input->unitary_value, 2, '.', '') }}"> -->
+            <input type="hidden" value="{{ $input->product_id }}" id="product-hidden">
             <input type="button" class="btn btn-primary" onclick="editarEntrada()" value="Salvar" />
             <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
         </form>
@@ -43,7 +43,7 @@
 </body>
 <script>
     carregarProdutos();
-    formata();
+    formata(); 
 
     function formata() {
         $("#unitary-value").maskMoney({
@@ -54,14 +54,15 @@
     }
 
     function carregarProdutos() {
+        product_hidden = $("#product-hidden").val(); 
         $.ajax({
             type: "GET",
             url: 'http://127.0.0.1:8000/api/products',
             dataType: 'json',
-            success: function(data) {
+            success: function(data) {                
                 data.map(u => {
                     console.log("u --> ", u.name)
-                    var table = "<option value='" + u.id + "'>" + u.name + "</option>"
+                    var table = "<option value='" + u.id + "' "+ (u.id == product_hidden ? "selected" : "") +">" + u.name + "</option>"
 
                     $('#products').append(table);
                 })
@@ -70,7 +71,7 @@
                 alert("Erro ao realizar a requisicao")
             }
         });
-    }
+    }    
 
     function editarEntrada() {
         var product = $("#products option:selected").val()
