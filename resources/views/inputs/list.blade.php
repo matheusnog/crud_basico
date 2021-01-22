@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="col-md-10 offset-md-1">
+    <div class="col-md-12">
         <h1 class="text-center">Entradas</h1>
         <div class="text-center m-3">
             <a class="btn btn-primary" href="/inputs/new">Nova entrada</a>
@@ -27,6 +27,8 @@
                     <th scope="col">Valor total</th>
                     <th scope="col">Valor unitário</th>
                     <th scope="col">Quantidade</th>
+                    <th scope="col">Quantidade antes</th>
+                    <th scope="col">Quantidade depois</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -71,8 +73,12 @@
             url: 'http://127.0.0.1:8000/api/inputs',
             dataType: 'json',
             success: function(data) {
+                var tamanho = data.length;
+                var contador = 0;
+                var ver = "";
                 data.map(u => {
                     console.log("u --> ", u)
+                    contador++;
 
                     $table = "<tr>";
                     $table += "<td>" + u.date + "</td>";
@@ -80,11 +86,17 @@
                     $table += "<td>" + formatter.format(u.total_value) + "</td>";
                     $table += "<td>" + formatter.format(u.unitary_value) + "</td>";
                     $table += "<td>" + u.amount + "</td>";
-                    $table += "<td><a class='btn btn-primary' href='/inputs/edit/" + u.id + "'>Editar</a> ";
-                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button> ";
-                    $table += "<a class='btn btn-success' href='/inputs/show/" + u.id + "'>Ver dados</a></td>";
-                    $table += "</tr>";
-
+                    $table += "<td>" + u.before_amount + "</td>";
+                    $table += "<td>" + u.after_amount + "</td>";
+                    if (contador == tamanho) {
+                        $table += "<td><a class='btn btn-primary' href='/inputs/edit/" + u.id + "'>Editar</a> ";
+                        $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button> ";
+                        $table += "<a class='btn btn-success' href='/inputs/show/" + u.id + "'>Ver dados</a></td>";
+                        $table += "</tr>";
+                    } else {
+                        $table += "<td></td>";
+                        $table += "</tr>";
+                    }
                     $('#tabela-corpo').append($table);
                 })
             },

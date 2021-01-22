@@ -31,10 +31,11 @@
             </div>
             <div class="form-group">
                 <label for="preco">Valor unitário</label>
-                <input type="text" class="form-control" id="unitary-value" placeholder="Valor unitário" value="{{ $input->unitary_value }}">
+                <input type="text" class="form-control" id="unitary-value" placeholder="Valor unitário" value="{{ number_format($input->unitary_value, 2, '.', '') }}">
             </div>
-            <!-- <input type="text" value="{{ $input->unitary_value }}"> -->
-            <input type="button" class="btn btn-primary" onclick="cadastraEntrada()" value="Salvar" />
+            <input type="hidden" id="id-hidden" value="{{ $input->id }}">
+            <!-- <input type="text" value="{{ number_format($input->unitary_value, 2, '.', '') }}"> -->
+            <input type="button" class="btn btn-primary" onclick="editarEntrada()" value="Salvar" />
             <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
         </form>
     </div>
@@ -43,14 +44,6 @@
 <script>
     carregarProdutos();
     formata();
-
-    // $(document).ready(function() {
-    //     $("#unitary-value").maskMoney({
-    //         prefix: "R$ ",
-    //         decimal: ",",
-    //         thousands: "."
-    //     });
-    // });
 
     function formata() {
         $("#unitary-value").maskMoney({
@@ -79,11 +72,12 @@
         });
     }
 
-    function cadastraEntrada() {
+    function editarEntrada() {
         var product = $("#products option:selected").val()
         var amount = $("#amount").val()
         var date = $("#date").val()
         var unitary_value = $('#unitary-value').maskMoney('unmasked')[0];
+        var id = $("#id-hidden").val()
 
         console.log(product)
         console.log(amount)
@@ -91,8 +85,8 @@
         console.log(unitary_value)
 
         $.ajax({
-            type: "POST",
-            url: 'http://127.0.0.1:8000/api/inputs',
+            type: "PUT",
+            url: 'http://127.0.0.1:8000/api/inputs/' + id,
             dataType: 'json',
             data: {
                 'product': product,
@@ -102,7 +96,7 @@
             },
             success: function(data) {
                 console.log(data)
-                alert("Product successfully registered")
+                alert("Entrada editada com sucesso")
             },
             error: function(data) {
                 console.log(data)

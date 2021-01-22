@@ -21,7 +21,7 @@ class InputsController extends Controller
         $input->amount = $request->amount;
         $input->date = $request->date;
         $input->unitary_value = $request->unitary_value;
-        $input->total_value = $request->unitary_value * $request->amount;
+        $input->total_value = $request->unitary_value * $request->amount;        
 
         $product = Product::find($request->product);
         $input->after_amount = $product->current_amount + $request->amount;
@@ -65,16 +65,29 @@ class InputsController extends Controller
 
         if (is_object($input)) {
             if ($request->product != $input->product_id) {
+                // voltando o valor anterior para o produto errado
                 $product = Product::find($input->product_id);
                 $product->current_amount = $input->before_amount;
                 $input->product_id = $request->product;
-            } else {
-                $product = Product::find($request->product);
-                $input->after_amount = $product->current_amount + $request->amount;
-                $input->before_amount = $product->current_amount;
-                $product->current_amount = $input->after_amount;
-            }
+                $product->save();
 
+                // passando o valor para o novo produto
+                $newProduct = Product::find($request->product);
+                $input->before_amount = $newProduct->current_amount;
+                $newProduct->current_amount = $newProduct->current_amount + $request->amount;
+                $input->after_amount = $newProduct->current_amount;
+
+                $newProduct->save();
+                
+            } else {
+                // alterando os valores do mesmo produto
+                $product = Product::find($request->product);
+                
+                $input->after_amount = $input->before_amount + $request->amount;
+                $product->current_amount = $input->after_amount;
+                $product->save();
+            }
+            
             $input->amount = $request->amount;
             $input->date = $request->date;
             $input->unitary_value = $request->unitary_value;
