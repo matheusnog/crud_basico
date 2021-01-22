@@ -80,6 +80,8 @@
                     console.log("u --> ", u)
                     contador++;
 
+                    // os ultimos registros de cada produtos podem ser alterados
+
                     $table = "<tr>";
                     $table += "<td>" + u.date + "</td>";
                     $table += "<td>" + u.product.name + "</td>";

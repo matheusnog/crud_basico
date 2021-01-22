@@ -64,7 +64,7 @@
             dataType: 'json',
             success: function(data) {
                 data.map(u => {
-                    console.log("u --> ", u.name)
+                    console.log("u --> ", u)
 
                     $table = "<tr>";
                     $table += "<td>" + u.id + "</td>";

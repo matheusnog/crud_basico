@@ -9,7 +9,7 @@ use App\Models\Product;
 class ProductsController extends Controller
 {
     public function getAll(){
-        return Product::all();
+        return Product::with('inputs')->get()->toArray();
     }
 
     public function get($id){
