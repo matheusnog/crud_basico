@@ -12,6 +12,11 @@ class InputsController extends Controller
         return view('inputs.create');
     }
 
+    public function edit($id){
+        $input = Input::find($id);
+        return view('inputs.edit', ['input' => $input]);
+    }
+
     public function list(){
         $input = Input::all();
         return view('inputs.list', ['input' => $input]);

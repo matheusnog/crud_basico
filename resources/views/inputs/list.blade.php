@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-primary" onclick="excluirProduto()">Sim</button>
+                    <button type="button" class="btn btn-primary" onclick="excluirEntrada()">Sim</button>
                 </div>
             </div>
         </div>
@@ -58,6 +58,12 @@
 </body>
 <script>
     carregarTabela();
+
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+    })
 
     function carregarTabela() {
         $.ajax({
@@ -70,12 +76,13 @@
 
                     $table = "<tr>";
                     $table += "<td>" + u.date + "</td>";
-                    $table += "<td>" + u.product + "</td>";
-                    $table += "<td>" + u.total_value + "</td>";
-                    $table += "<td class='unitary-value'>" + u.unitary_value + "</td>";
+                    $table += "<td>" + u.product.name + "</td>";
+                    $table += "<td>" + formatter.format(u.total_value) + "</td>";
+                    $table += "<td>" + formatter.format(u.unitary_value) + "</td>";
                     $table += "<td>" + u.amount + "</td>";
-                    $table += "<td><a class='btn btn-primary' href='/products/edit/" + u.id + "'>Editar</a> ";
-                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button></td>";
+                    $table += "<td><a class='btn btn-primary' href='/inputs/edit/" + u.id + "'>Editar</a> ";
+                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button> ";
+                    $table += "<a class='btn btn-success' href='/inputs/show/" + u.id + "'>Ver dados</a></td>";
                     $table += "</tr>";
 
                     $('#tabela-corpo').append($table);
@@ -92,11 +99,11 @@
         console.log($('#id-hidden').val());
     }
 
-    function excluirProduto() {
+    function excluirEntrada() {
         var id = $("#id-hidden").val()
         $.ajax({
             type: "delete",
-            url: 'http://127.0.0.1:8000/api/products/' + id,
+            url: 'http://127.0.0.1:8000/api/inputs/' + id,
             dataType: 'json',
             success: function(data) {
                 console.log(data)

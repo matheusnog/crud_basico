@@ -11,7 +11,7 @@
 
 <body>
     <div class="col-md-6 offset-md-3">
-        <h1 class="text-center">Editar product</h1>
+        <h1 class="text-center">Editar produto</h1>
         <form action="" method="POST">
             @csrf
             <div class="form-group">

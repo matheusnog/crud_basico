@@ -10,13 +10,22 @@
 
 <body>
     <div class="col-md-8 offset-md-2">
+        <a href="/inputs/list" class="btn btn-primary">Voltar</a>
         <div class="form-group">
-            <label for="">Quantidade</label>
-            <input class="form-control" type="text" value="{{ $input->amount }}" disabled>
+            <label for="">ID da entrada</label>
+            <input class="form-control" type="text" value="{{ $input->id }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="">Data da entrada</label>
+            <input class="form-control" type="date" value="{{ $input->date }}" disabled>
         </div>
         <div class="form-group">
             <label for="">Nome do produto</label>
             <input class="form-control" type="text" value="{{ $input->product->name }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="">Quantidade</label>
+            <input class="form-control" type="text" value="{{ $input->amount }}" disabled>
         </div>
     </div>
 </body>

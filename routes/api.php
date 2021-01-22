@@ -44,3 +44,5 @@ Route::put('/products/{id}', [ProductsController::class, 'put']);
 // inputs
 Route::get('/inputs', [InputsController::class, 'getAll']);
 Route::post('/inputs', [InputsController::class, 'post']);
+Route::delete('/inputs/{id}', [InputsController::class, 'delete']);
+Route::put('/inputs/{id}', [InputsController::class, 'put']);

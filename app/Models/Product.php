@@ -15,7 +15,7 @@ class Product extends Model
         'current_amount',
     ];
 
-    public function input(){
-        return $this->belongsTo(Input::class);
+    public function inputs(){
+        return $this->hasMany(Input::class);
     }
 }
