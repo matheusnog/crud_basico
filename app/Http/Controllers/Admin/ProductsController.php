@@ -55,4 +55,9 @@ class ProductsController extends Controller
 
         return "Product excluído com sucesso! <a href='/products/lista'>Voltar para a lista</a>";
     }
+
+    public function show($id){
+        $product = Product::find($id);
+        return view('products.show', ['product' => $product]);
+    }
 }

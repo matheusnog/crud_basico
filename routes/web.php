@@ -44,6 +44,7 @@ Route::post('produtos/excluir/{id}', [ProdutosController::class, 'destroy'])->na
 Route::get('products/new', [ProductsController::class, 'create']);
 Route::get('products/list', [ProductsController::class, 'list']);
 Route::get('products/edit/{id}', [ProductsController::class, 'edit']);
+Route::get('products/show/{id}', [ProductsController::class, 'show']);
 
 // inputs
 Route::get('inputs/list', [InputsController::class, 'list']);
