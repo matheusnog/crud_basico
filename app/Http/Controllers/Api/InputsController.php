@@ -11,7 +11,7 @@ class InputsController extends Controller
 {
     public function getAll()
     {
-        return Input::with('product')->get()->toArray();
+        return Input::with('product','product.inputs')->get()->toArray();
     }
 
     public function post(Request $request)
