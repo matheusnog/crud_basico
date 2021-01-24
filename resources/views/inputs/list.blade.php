@@ -90,7 +90,7 @@
                     $table += "<td>" + u.amount + "</td>";
                     $table += "<td>" + u.before_amount + "</td>";
                     $table += "<td>" + u.after_amount + "</td>";
-                    if (contador == tamanho) {
+                    if (u.product.current_amount == u.after_amount) {
                         $table += "<td><a class='btn btn-primary' href='/inputs/edit/" + u.id + "'>Editar</a> ";
                         $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button> ";
                         $table += "<a class='btn btn-success' href='/inputs/show/" + u.id + "'>Ver dados</a></td>";

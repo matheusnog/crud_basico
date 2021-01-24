@@ -18,7 +18,7 @@
             @csrf
             <div class="form-group option">
                 <label for="name">Produto</label>
-                <select name="products" class="form-control" id="products">
+                <select name="products" class="form-control" id="products" disabled>
                 </select>
             </div>
             <div class="form-group">
