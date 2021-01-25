@@ -72,7 +72,8 @@
                     $table += "<td>" + u.code + "</td>";
                     $table += "<td>" + u.current_amount + "</td>";
                     $table += "<td><a class='btn btn-primary' href='/products/edit/" + u.id + "'>Editar</a> ";
-                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button></td>";
+                    $table += "<button type='button'  class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' onclick='carregarHidden(" + u.id + ")'>Excluir</button> ";
+                    $table += "<a class='btn btn-success' href='/products/show/" + u.id + "'>Ver entradas</a>";
                     $table += "</tr>";
 
                     $('#tabela-corpo').append($table);

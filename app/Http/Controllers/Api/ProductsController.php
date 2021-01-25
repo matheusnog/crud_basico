@@ -13,7 +13,7 @@ class ProductsController extends Controller
     }
 
     public function get($id){
-        return Product::find($id);
+        return Product::find($id)->with('inputs')->get()->toArray();
     }
 
     public function post(Request $request){

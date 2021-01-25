@@ -38,6 +38,7 @@ Route::delete('/produtos/{id}', [ProdutosController::class, 'delete']);
 // products
 Route::post('/products', [ProductsController::class, 'post']);
 Route::get('/products', [ProductsController::class, 'getAll']);
+Route::get('/products/{id}', [ProductsController::class, 'get']);
 Route::delete('/products/{id}', [ProductsController::class, 'delete']);
 Route::put('/products/{id}', [ProductsController::class, 'put']);
 
