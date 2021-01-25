@@ -51,3 +51,4 @@ Route::put('/inputs/{id}', [InputsController::class, 'put']);
 
 // sales
 Route::get('/sales', [SalesController::class, 'getAll']);
+Route::post('/sales', [SalesController::class, 'post']);
