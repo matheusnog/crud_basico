@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\ProdutosController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\InputsController;
+use App\Http\Controllers\Admin\SalesController;
+use App\Models\Sale;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +53,7 @@ Route::get('inputs/list', [InputsController::class, 'list']);
 Route::get('inputs/new', [InputsController::class, 'create']);
 Route::get('inputs/edit/{id}', [InputsController::class, 'edit']);
 Route::get('inputs/show/{id}', [InputsController::class, 'show']);
+
+// sales
+Route::get('sales/list', [SalesController::class, 'list']);
+Route::get('sales/new', [SalesController::class, 'create']);

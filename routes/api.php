@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\ProdutosController;
 use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\InputsController;
+use App\Http\Controllers\Api\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,6 @@ Route::get('/inputs', [InputsController::class, 'getAll']);
 Route::post('/inputs', [InputsController::class, 'post']);
 Route::delete('/inputs/{id}', [InputsController::class, 'delete']);
 Route::put('/inputs/{id}', [InputsController::class, 'put']);
+
+// sales
+Route::get('/sales', [SalesController::class, 'getAll']);

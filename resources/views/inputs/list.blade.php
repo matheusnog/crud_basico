@@ -19,14 +19,14 @@
             <a class="btn btn-outline-primary" href="/products/list">Produtos</a>
         </div>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center">
             <thead>
                 <tr>
                     <th scope="col">Data</th>
                     <th scope="col">Produto</th>
                     <th scope="col">Valor total</th>
                     <th scope="col">Valor unitário</th>
-                    <th scope="col">Quantidade</th>
+                    <th scope="col">Quantidade de entrada</th>
                     <th scope="col">Quantidade antes</th>
                     <th scope="col">Quantidade depois</th>
                     <th scope="col"></th>
