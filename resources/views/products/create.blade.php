@@ -1,37 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Document</title>
-</head>
+@section('title', 'Criar produto')
 
-<body>
-    <div class="col-md-6 offset-md-3">
-        <h1 class="text-center">Novo produto</h1>
-        <form action="" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Nome">
-            </div>
-            <div class="form-group">
-                <label for="preco">Código</label>
-                <input type="number" class="form-control" id="code" placeholder="Código">
-            </div>
-            <!-- <div class="form-group">
+@section('content')
+<div class="col-md-6 offset-md-3">
+    <h1 class="text-center">Novo produto</h1>
+    <form action="" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Nome">
+        </div>
+        <div class="form-group">
+            <label for="preco">Código</label>
+            <input type="number" class="form-control" id="code" placeholder="Código">
+        </div>
+        <!-- <div class="form-group">
                 <label for="codigo">Current amount</label>
                 <input type="text" class="form-control" name="current_amount" id="current_amount" placeholder="Current amount">
             </div> -->
-            <input type="button" class="btn btn-primary" onclick="cadastraProduto()" value="Cadastrar" />
-            <a href="/products/list" class="btn btn-outline-primary">Voltar</a>
-        </form>
-    </div>
+        <input type="button" class="btn btn-primary" onclick="cadastraProduto()" value="Cadastrar" />
+        <a href="/products/list" class="btn btn-outline-primary">Voltar</a>
+    </form>
+</div>
 
-</body>
 <script>
     function cadastraProduto() {
         var name = $("#name").val()
@@ -58,4 +50,4 @@
     }
 </script>
 
-</html>
+@endsection

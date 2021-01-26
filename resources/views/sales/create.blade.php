@@ -1,53 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Nova entrada</title>
-</head>
+@section('title', 'Welcome')
 
-<body>
-    <div class="col-md-6 offset-md-3">
-        <h1 class="text-center">Nova venda</h1>
-        <form action="" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="preco">Data</label>
-                <input type="date" class="form-control" id="date" placeholder="Data">
-            </div>
-            <input type="button" class="btn btn-outline-primary" onclick="adicionarProduto()" value="Adicionar produto">
-            <input type="button" class="btn btn-outline-danger" onclick="removerProduto()" value="Remover produto">
-            <div id="produto-lista">
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="name">Produto</label>
-                        <select name="products" class="form-control product" id="products">
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="preco">Quantidade</label>
-                        <input type="number" class="form-control amount" id="amount" placeholder="Quantidade">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="preco">Valor unitário</label>
-                        <input type="text" class="form-control unitary-value" id="unitary-value" placeholder="Valor unitário">
-                    </div>
+@section('content')
+<div class="col-md-6 offset-md-3">
+    <h1 class="text-center">Nova venda</h1>
+    <form action="" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="preco">Data</label>
+            <input type="date" class="form-control" id="date" placeholder="Data">
+        </div>
+        <input type="button" class="btn btn-outline-primary" onclick="adicionarProduto()" value="Adicionar produto">
+        <input type="button" class="btn btn-outline-danger" onclick="removerProduto()" value="Remover produto">
+        <div id="produto-lista">
+            <hr>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="name">Produto</label>
+                    <select name="products" class="form-control product" id="products">
+                    </select>
                 </div>
-
+                <div class="form-group col-md-4">
+                    <label for="preco">Quantidade</label>
+                    <input type="number" class="form-control amount" id="amount" placeholder="Quantidade">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="preco">Valor unitário</label>
+                    <input type="text" class="form-control unitary-value" id="unitary-value" placeholder="Valor unitário">
+                </div>
             </div>
 
-            <input type="button" class="btn btn-primary" onclick="cadastraVenda()" value="Cadastrar" />
-            <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
-        </form>
-    </div>
+        </div>
 
-</body>
+        <input type="button" class="btn btn-primary" onclick="cadastraVenda()" value="Cadastrar" />
+        <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
+    </form>
+</div>
+
 <script>
     var quantidade = 0;
     carregarProdutos();
@@ -168,4 +158,4 @@
     }
 </script>
 
-</html>
+@endsection

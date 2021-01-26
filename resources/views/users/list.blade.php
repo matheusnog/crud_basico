@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <title>Ver Usuários</title>
-</head>
+@section('title', 'Lista de usuários')
 
-<body>
+@section('content')
   <h1 class="text-center">Usuários</h1>
   <div class="text-center">
     <a class="btn btn-primary m-3" href="/users/new">Cadastrar novo usuário</a>
@@ -26,20 +18,7 @@
       </tr>
     </thead>
     <tbody id="tabela-corpo">
-    </tbody>
-    <!-- <tbody>
-    @foreach($users as $user)
-        <tr>
-        <th scope="row">{{ $user->id }}</th>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->email }}</td>
-        <td>
-            <a class="btn btn-primary" href="/users/editar/{{$user->id}}">Editar</a>
-            <a class="btn btn-danger" href="/users/excluir/{{$user->id}}">Excluir</a>
-        </td>
-        </tr>    
-    @endforeach
-    </tbody> -->
+    </tbody>    
   </table>
 
   <!-- Modal -->
@@ -63,7 +42,6 @@
     </div>
   </div>
   <input type="hidden" id="id-hidden">
-</body>
 
 <script>
   carregarTabela();
@@ -120,4 +98,4 @@
   }
 </script>
 
-</html>
+@endsection

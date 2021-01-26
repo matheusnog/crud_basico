@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Nova entrada</title>
-</head>
+@section('title', 'Nova entrada')
 
-<body>
+@section('content')
     <div class="col-md-6 offset-md-3">
         <h1 class="text-center">Nova entrada</h1>
         <form action="" method="POST">
@@ -38,7 +29,6 @@
         </form>
     </div>
 
-</body>
 <script>
     carregarProdutos();
     $(document).ready(function() {
@@ -101,4 +91,4 @@
     }
 </script>
 
-</html>
+@endsection

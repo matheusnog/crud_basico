@@ -1,63 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <title>Ver Produtos</title>
-</head>
+@section('title', 'Lista de entradas')
 
-<body>
-    <div class="col-md-12">
-        <h1 class="text-center">Entradas</h1>
-        <div class="text-center m-3">
-            <a class="btn btn-primary" href="/inputs/new">Nova entrada</a>
-            <a class="btn btn-outline-primary" href="/products/list">Produtos</a>
-        </div>
-
-        <table class="table table-bordered text-center">
-            <thead>
-                <tr>
-                    <th scope="col">Data</th>
-                    <th scope="col">Produto</th>
-                    <th scope="col">Valor total</th>
-                    <th scope="col">Valor unitário</th>
-                    <th scope="col">Quantidade de entrada</th>
-                    <th scope="col">Quantidade antes</th>
-                    <th scope="col">Quantidade depois</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="tabela-corpo">
-            </tbody>
-        </table>
+@section('content')
+<div class="col-md-12">
+    <h1 class="text-center">Entradas</h1>
+    <div class="text-center m-3">
+        <a class="btn btn-primary" href="/inputs/new">Nova entrada</a>
+        <a class="btn btn-outline-primary" href="/products/list">Produtos</a>
     </div>
-    <input type="hidden" id="id-hidden">
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Excluir produto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Você tem certeza que deseja excluir esse produto?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-primary" onclick="excluirEntrada()">Sim</button>
-                </div>
+
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Valor total</th>
+                <th scope="col">Valor unitário</th>
+                <th scope="col">Quantidade de entrada</th>
+                <th scope="col">Quantidade antes</th>
+                <th scope="col">Quantidade depois</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo">
+        </tbody>
+    </table>
+</div>
+<input type="hidden" id="id-hidden">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Excluir produto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Você tem certeza que deseja excluir esse produto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-primary" onclick="excluirEntrada()">Sim</button>
             </div>
         </div>
     </div>
-</body>
+</div>
+
 <script>
     carregarTabela();
 
@@ -132,4 +123,4 @@
     }
 </script>
 
-</html>
+@endsection
