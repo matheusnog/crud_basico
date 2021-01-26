@@ -3,31 +3,31 @@
 @section('title', 'Nova entrada')
 
 @section('content')
-    <div class="col-md-6 offset-md-3">
-        <h1 class="text-center">Nova entrada</h1>
-        <form action="" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="name">Produto</label>
-                <select name="products" class="form-control" id="products">
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="preco">Quantidade</label>
-                <input type="number" class="form-control" id="amount" placeholder="Quantidade">
-            </div>
-            <div class="form-group">
-                <label for="preco">Data</label>
-                <input type="date" class="form-control" id="date" placeholder="Data">
-            </div>
-            <div class="form-group">
-                <label for="preco">Valor unitário</label>
-                <input type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">
-            </div>
-            <input type="button" class="btn btn-primary" onclick="cadastraEntrada()" value="Cadastrar" />
-            <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
-        </form>
-    </div>
+<div class="col-md-6 offset-md-3">
+    <h1 class="text-center">Nova entrada</h1>
+    <form action="" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="name">Produto</label>
+            <select name="products" class="form-control" id="products">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="preco">Quantidade</label>
+            <input type="number" class="form-control" id="amount" placeholder="Quantidade">
+        </div>
+        <div class="form-group">
+            <label for="preco">Data</label>
+            <input type="date" class="form-control" id="date" placeholder="Data" value="<?php echo date('Y-m-d'); ?>">
+        </div>
+        <div class="form-group">
+            <label for="preco">Valor unitário</label>
+            <input type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">
+        </div>
+        <input type="button" class="btn btn-primary" onclick="cadastraEntrada()" value="Cadastrar" />
+        <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
+    </form>
+</div>
 
 <script>
     carregarProdutos();
@@ -83,8 +83,8 @@
                 console.log(data)
                 alert("Product successfully registered")
             },
-            error: function(data) {    
-                console.log(data)          
+            error: function(data) {
+                console.log(data)
                 alert("Erro ao realizar a requisicao")
             }
         });

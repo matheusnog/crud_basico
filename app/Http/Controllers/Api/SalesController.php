@@ -26,6 +26,15 @@ class SalesController extends Controller
             $saleProduct->sale_id = $sale->id;
             $saleProduct->product_id = $product;
             $saleProduct->amount =  $request->amount[$contador];
+
+            if ($request->amount[$contador] == null) {
+                $sale->delete();
+                return response()->json([
+                    'message' => 'Preencha o campo de quantidade',
+                    'data' => $sale
+                ], 400);
+            }
+
             $saleProduct->unitary_value =  $request->unitary_value[$contador];
 
             $prod = Product::find($product);
@@ -58,7 +67,8 @@ class SalesController extends Controller
         ], 200);
     }
 
-    public function getAll(){        
-        return Sale::with('user')->get()->toArray();
+    public function getAll()
+    {
+        return Sale::with('user', 'saleProducts.product')->get()->toArray();
     }
 }

@@ -14,6 +14,7 @@
             <tr>
                 <th scope="col">Usuário</th>
                 <th scope="col">Data</th>
+                <th scope="col">Produtos da venda</th>
                 <th scope="col">Valor total</th>
                 <th scope="col"></th>
             </tr>
@@ -63,9 +64,21 @@
                 var contador = 0;
                 var ver = "";
                 data.map(u => {
+                    console.log(u)
                     $table = "<tr>";
                     $table += "<td>" + u.user.name + "</td>";
                     $table += "<td>" + u.date + "</td>";
+                    $table += "<td>";
+                    u.sale_products.map(inp => {
+                        $table += "<p><strong>Produto: </strong>" + inp.product.name + "</p>";
+                        $table += "<p><strong>Qtd: </strong>" + inp.amount + "</p>";
+                        $table += "<p><strong>Qtd antes: </strong>" + inp.before_amount;
+                        $table += ", <strong>Qtd depois: </strong>" + inp.after_amount + "</p>";
+                        $table += "<p><strong>Valor unitário: </strong>" + formatter.format(inp.unitary_value) + "</p>";
+                        $table += "<p><strong>Valor total: </strong>" + formatter.format(inp.total_value) + "</p>";
+                        $table += "<hr>";
+                    })
+                    $table += "</td>";
                     $table += "<td>" + formatter.format(u.total_value) + "</td>";
                     $table += "<td><a class='btn btn-primary' href='/sales/show/" + u.id + "'>Produtos da venda</a></td>";
                     $table += "</tr>";

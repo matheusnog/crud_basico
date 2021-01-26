@@ -1,41 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Ver produto</title>
-</head>
+@section('title', 'Entradas do produto')
 
-<body>
-    <!-- {{$product->inputs->where('product_id', '1')->last()}} -->
+@section('content')
+<!-- {{$product->inputs->where('product_id', '1')->last()}} -->
 
-    <div class="col-md-10 offset-md-1">
-        <h1 class="text-center">Entradas do produto: {{ $product->name }}</h1>
-        <div class="text-center m-3">
-            <a class="btn btn-primary" href="/products/list">Produtos</a>
-            <a class="btn btn-outline-primary" href="/inputs/list">Entradas</a>
-        </div>
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Data</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Quantidade antes</th>
-                    <th scope="col">Quantidade depois</th>
-                    <th scope="col">Valor unitário</th>
-                    <th scope="col">Valor total</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-corpo">
-            </tbody>
-        </table>
+<div class="col-md-10 offset-md-1">
+    <h1 class="text-center">Entradas do produto: {{ $product->name }}</h1>
+    <div class="text-center m-3">
+        <a class="btn btn-primary" href="/products/list">Produtos</a>
+        <a class="btn btn-outline-primary" href="/inputs/list">Entradas</a>
     </div>
-    <input type="hidden" id="id-hidden" value="{{ $product->id }}">
-</body>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Quantidade antes</th>
+                <th scope="col">Quantidade depois</th>
+                <th scope="col">Valor unitário</th>
+                <th scope="col">Valor total</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-corpo">
+        </tbody>
+    </table>
+</div>
+<input type="hidden" id="id-hidden" value="{{ $product->id }}">
+
 <script>
     carregarTabela();
 
@@ -73,5 +66,4 @@
         });
     }
 </script>
-
-</html>
+@endsection
