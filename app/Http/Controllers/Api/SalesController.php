@@ -35,7 +35,7 @@ class SalesController extends Controller
                 return response()->json([
                     'message' => 'Não foi possível realizar a venda, a quantidade comprada é maior do que o estoque!',
                     'data' => $sale
-                ], 404);
+                ], 400);
             }
 
             $saleProduct->before_amount =  $prod->current_amount;
@@ -56,5 +56,9 @@ class SalesController extends Controller
             'message' => 'Venda realizada com sucesso!',
             'data' => $sale
         ], 200);
+    }
+
+    public function getAll(){        
+        return Sale::with('user')->get()->toArray();
     }
 }

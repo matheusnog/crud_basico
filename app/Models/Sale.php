@@ -14,4 +14,14 @@ class Sale extends Model
         'user_id',
         'total_value',
     ];
+
+    public function saleProducts()
+    {
+        return $this->hasMany(SaleProduct::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

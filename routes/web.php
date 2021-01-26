@@ -57,3 +57,4 @@ Route::get('inputs/show/{id}', [InputsController::class, 'show']);
 // sales
 Route::get('sales/list', [SalesController::class, 'list']);
 Route::get('sales/new', [SalesController::class, 'create']);
+Route::get('sales/show/{id}', [SalesController::class, 'show']);

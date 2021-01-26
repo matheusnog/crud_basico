@@ -18,4 +18,8 @@ class SaleProduct extends Model
         'unitary_value',
         'total_value',
     ];
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

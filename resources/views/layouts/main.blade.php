@@ -20,9 +20,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="/products/list">Produtos</a>
+                    <!-- active -->
+                    <a class="nav-item nav-link" href="/products/list">Produtos</a>
                     <a class="nav-item nav-link" href="/inputs/list">Entradas</a>
-                    <a class="nav-item nav-link" href="/sales/new">Vendas</a>                    
+                    <a class="nav-item nav-link" href="/sales/list">Vendas</a>
                     <a class="nav-item nav-link" href="/users/list">Usuários</a>
                 </div>
             </div>

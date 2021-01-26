@@ -9,7 +9,7 @@
         @csrf
         <div class="form-group">
             <label for="preco">Data</label>
-            <input type="date" class="form-control" id="date" placeholder="Data">
+            <input type="date" class="form-control" id="date" placeholder="Data" value="<?php echo date('Y-m-d'); ?>">
         </div>
         <input type="button" class="btn btn-outline-primary" onclick="adicionarProduto()" value="Adicionar produto">
         <input type="button" class="btn btn-outline-danger" onclick="removerProduto()" value="Remover produto">
@@ -34,13 +34,47 @@
         </div>
 
         <input type="button" class="btn btn-primary" onclick="cadastraVenda()" value="Cadastrar" />
-        <a href="/inputs/list" class="btn btn-outline-primary">Voltar</a>
+        <a href="/sales/list" class="btn btn-outline-primary">Voltar</a>
     </form>
 </div>
 
 <script>
+    // ao selecionar um produto, trazer o valor médio de entrada, mais 20%
+
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+    })
+
     var quantidade = 0;
     carregarProdutos();
+
+    $("#products").change(function() {
+        // alert('Selected value: ' + $(this).val());
+        $.ajax({
+            type: "GET",
+            url: 'http://127.0.0.1:8000/api/products/' + $(this).val(),
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+                var total = 0;
+                var cont = 0;
+                data.map(u => {
+                    u.inputs.map(inp => {
+                        // console.log(formatter.format(inp.unitary_value))
+                        total += inp.unitary_value;
+                        cont++;
+                    })
+                })
+                var valor = total/cont;
+                $('#unitary-value').val(formatter.format(valor + (valor * 0.20)))
+            },
+            error: function() {
+                alert("Erro ao realizar a requisicao")
+            }
+        });
+    });
 
     function cadastraVenda() {
         var date = $("#date").val()
@@ -77,10 +111,10 @@
             },
             success: function(data) {
                 console.log(data)
-                alert("Product successfully registered")
+                alert("Venda realizada com sucesso")
             },
-            error: function() {
-                alert("Erro ao realizar a requisicao")
+            error: function(e) {
+                alert(e.message)
             }
         });
     }
