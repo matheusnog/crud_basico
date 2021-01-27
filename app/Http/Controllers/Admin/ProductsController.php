@@ -60,4 +60,9 @@ class ProductsController extends Controller
         $product = Product::find($id);
         return view('products.show', ['product' => $product]);
     }
+
+    public function showAll(){
+        $product = Product::all();
+        return view('products.all', ['product' => $product]);
+    }
 }

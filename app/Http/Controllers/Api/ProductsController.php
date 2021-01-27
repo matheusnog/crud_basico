@@ -10,12 +10,12 @@ class ProductsController extends Controller
 {
     public function getAll()
     {
-        return Product::with('inputs')->get()->toArray();
+        return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
     }
 
     public function get($id)
     {
-        return Product::where('id', '=', $id)->with('inputs', 'saleProducts.sale')->get()->toArray();
+        return Product::where('id', '=', $id)->with('inputs', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
     }
 
     public function post(Request $request)
