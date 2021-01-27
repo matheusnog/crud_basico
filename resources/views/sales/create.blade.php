@@ -72,7 +72,7 @@
                         alert("Valor informado é maior do que o estoque")
                     } else {
                         $('.button').prop('disabled', false);
-                    }                    
+                    }
                 })
             },
             error: function() {
@@ -92,13 +92,13 @@
                 var total = 0;
                 var cont = 0;
                 data.map(u => {
-                    u.inputs.map(inp => {                        
+                    u.inputs.map(inp => {
                         total += inp.unitary_value;
                         cont++;
                     })
                 })
                 var valor = total / cont;
-                $('#unitary-value').val(formatter.format(valor + (valor * 0.20)))                
+                $('#unitary-value').val(formatter.format(valor + (valor * 0.20)))
             },
             error: function() {
                 alert("Erro ao realizar a requisicao")

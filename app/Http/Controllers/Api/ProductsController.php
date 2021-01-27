@@ -15,7 +15,7 @@ class ProductsController extends Controller
 
     public function get($id)
     {
-        return Product::where('id', '=', $id)->with('inputs')->get()->toArray();
+        return Product::where('id', '=', $id)->with('inputs', 'saleProducts.sale')->get()->toArray();
     }
 
     public function post(Request $request)

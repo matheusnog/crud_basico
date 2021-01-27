@@ -15,7 +15,13 @@ class Product extends Model
         'current_amount',
     ];
 
-    public function inputs(){
+    public function inputs()
+    {
         return $this->hasMany(Input::class);
+    }
+
+    public function saleProducts()
+    {
+        return $this->hasMany(SaleProduct::class);
     }
 }
