@@ -58,6 +58,7 @@
     });
 
     function campoAlterado() {
+        // verifica se o valor do campo é maior do que o estoque
         var valorCampo = ($("#amount").val())
         $.ajax({
             type: "GET",
@@ -71,7 +72,7 @@
                         alert("Valor informado é maior do que o estoque")
                     } else {
                         $('.button').prop('disabled', false);
-                    }
+                    }                    
                 })
             },
             error: function() {
@@ -81,6 +82,7 @@
     }
 
     function carregaValor() {
+        // carrega o valor médio do produto + 20% 
         $.ajax({
             type: "GET",
             url: 'http://127.0.0.1:8000/api/products/' + $("#products").val(),
@@ -90,15 +92,13 @@
                 var total = 0;
                 var cont = 0;
                 data.map(u => {
-                    u.inputs.map(inp => {
-                        // console.log(formatter.format(inp.unitary_value))
+                    u.inputs.map(inp => {                        
                         total += inp.unitary_value;
                         cont++;
                     })
                 })
                 var valor = total / cont;
-                $('#unitary-value').val(formatter.format(valor + (valor * 0.20)))
-                // $("#teste").val($("#products").val());
+                $('#unitary-value').val(formatter.format(valor + (valor * 0.20)))                
             },
             error: function() {
                 alert("Erro ao realizar a requisicao")
