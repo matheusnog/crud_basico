@@ -48,6 +48,7 @@ Route::get('products/list', [ProductsController::class, 'list']);
 Route::get('products/edit/{id}', [ProductsController::class, 'edit']);
 Route::get('products/show/{id}', [ProductsController::class, 'show']);
 Route::get('products/show', [ProductsController::class, 'showAll']);
+Route::get('products/lista', [ProductsController::class, 'showAll2']);
 
 // inputs
 Route::get('inputs/list', [InputsController::class, 'list']);

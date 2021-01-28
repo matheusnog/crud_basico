@@ -25,7 +25,8 @@
             <input type="date" class="form-control" id="data-final">
         </div>
         <div class="form-group col-md-1 pl-md-3">
-            <div class="btn btn-outline-primary" onclick="filtroData()"><i class="fas fa-search"></i></div>
+            <div class="btn btn-outline-primary" onclick="filtrar()"><i class="fas fa-search"></i></div>
+            <div class="btn btn-outline-danger" onclick="carregarTabela()"><i class="fas fa-ban"></i></div>
         </div>
     </div>
 
@@ -51,48 +52,71 @@
     carregarTabela();
 
     $(document).ready(function() {
-        $("#search").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#tabela tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-
-        // $('#data-inicial').change(function() {
-        //     filtroData();
+        // $("#search").on("keyup", function() {
+        //     var value = $(this).val().toLowerCase();
+        //     $("#tabela tbody tr").filter(function() {
+        //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //     });
         // });
+
     });
 
-    function filtroData() {
+    function filtrar() {
         var inicial = $('#data-inicial').val()
         var final = $('#data-final').val()
         var pesquisa = $('#search').val()
 
-        if (inicial == '' || final == '') {
-            $("#tabela tbody tr").filter(function() {
-                $(this).toggle(true)
-            });
-        } else {
-            $("#tabela tbody tr").filter(function() {
-                var data_linha = $(this).find('.data').text().toLowerCase();
-                var nome_linha = $(this).find('.nome').text().toLowerCase();
-                if (data_linha >= inicial && data_linha <= final) {
-                    $(this).toggle(true)
+        var entrada = [];
+        var saida = [];
+        $.ajax({
+            type: "GET",
+            url: 'http://127.0.0.1:8000/api/products',
+            dataType: 'json',
+            data: {
+                'inicial': inicial,
+                'final': final,
+                'pesquisa': pesquisa,
+            },
+            success: function(data) {
+                console.log(data)
+                data.map(u => {
+                    u.inputs.map(inp => {
+                        entrada.push(inp);
+                    })
 
-                    if (pesquisa != '' && nome_linha != pesquisa) {
-                        $(this).toggle(false)
-                    }
+                    u.sale_products.map(inp => {
+                        saida.push(inp);
+                    })
+                })
 
-                    if (pesquisa != '' && nome_linha == pesquisa) {
-                        $(this).toggle(true)
-                    } else if (pesquisa == '') {
-                        $(this).toggle(true)
-                    }
-                } else {
-                    $(this).toggle(false)
+                var entradaSaida = entrada.concat(saida);
+
+                // compara as datas para realizar o sort
+                function compare(a, b) {
+                    return a.created_at < b.created_at ? -1 : a.created_at > b.created_at ? 1 : 0;
                 }
-            });
-        }
+
+                entradaSaida.sort(compare);
+
+                $("#tabela-corpo").empty();
+
+                entradaSaida.map(inp => {
+                    $table = "<tr>";
+                    $table += "<td " + (inp.date != null ? "class='bg-success'>Entrada" : "class='bg-danger'>Saída") + "</td>";
+                    $table += "<td class='data'>" + (inp.date != null ? inp.date : inp.sale.date) + "</td>";
+                    $table += "<td class='nome'>" + inp.product.name + "</td>";
+                    $table += "<td>" + inp.amount + "</td>";
+                    $table += "<td>" + inp.before_amount + "</td>";
+                    $table += "<td>" + inp.after_amount + "</td>";
+                    $table += "<td>" + formatter.format(inp.unitary_value) + "</td>";
+                    $table += "<td>" + formatter.format(inp.total_value) + "</td></tr>";
+                    $('#tabela-corpo').append($table);
+                })
+            },
+            error: function() {
+                alert("Erro ao realizar a requisicao")
+            }
+        });
     }
 
     const formatter = new Intl.NumberFormat('pt-BR', {
@@ -102,6 +126,10 @@
     })
 
     function carregarTabela() {
+        $('#data-inicial').val('')
+        $('#data-final').val('')
+        $('#search').val('')
+
         var id = $("#id-hidden").val()
         var entrada = [];
         var saida = [];
@@ -128,6 +156,8 @@
                 }
 
                 entradaSaida.sort(compare);
+
+                $("#tabela-corpo").empty();
 
                 entradaSaida.map(inp => {
                     // console.log(inp)

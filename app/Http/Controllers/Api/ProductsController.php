@@ -8,9 +8,17 @@ use App\Models\Product;
 
 class ProductsController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
+        if ($request->pesquisa != '') {
+            return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->where([
+                ['name', '=', $request->pesquisa],
+                // ['inputs.date', '>=', $request->inicial],
+                // ['inputs.date', '<=', $request->final],
+            ])->get()->toArray();
+        } else {
+            return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
+        }
     }
 
     public function get($id)
