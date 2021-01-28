@@ -5,17 +5,37 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductsController extends Controller
 {
     public function getAll(Request $request)
     {
         if ($request->pesquisa != '') {
-            return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->where([
+            $prod = Product::with('inputs.product', 'inputs', 'saleProducts.sale', 'saleProducts.product');
+
+            if ($request->inicial)
+                $prod = $prod->where('inputs.date', '>=', $request->inicial);
+
+            if ($request->final)
+                $prod = $prod->where('inputs.date', '<=', $request->final);
+            // colocar wherehas
+            if ($request->pesquisa)
+                $prod = $prod->where('name', 'LIKE', $request->pesquisa . '%');
+
+            exit($prod->toSql());
+
+            $prod = $prod->get()->toArray();
+
+            return $prod;
+
+            /*->where([
                 ['name', '=', $request->pesquisa],
                 // ['inputs.date', '>=', $request->inicial],
                 // ['inputs.date', '<=', $request->final],
-            ])->get()->toArray();
+            ])->whereHas('inputs', function (Builder $query) {
+                $query->where('amount', '=', 66);
+            })->get()->toArray();*/
         } else {
             return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
         }
