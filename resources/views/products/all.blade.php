@@ -11,8 +11,8 @@
         <a class="btn btn-outline-primary" href="/inputs/list">Entradas</a>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-4">
+    <div class="form-row align-items-end">
+        <div class="form-group col-md-3">
             <label for="">Buscar: </label>
             <input type="text" class="form-control" id="search">
         </div>
@@ -23,6 +23,9 @@
         <div class="form-group col-md-4">
             <label for="preco">Data final: </label>
             <input type="date" class="form-control" id="data-final">
+        </div>
+        <div class="form-group col-md-1 pl-md-3">
+            <div class="btn btn-outline-primary" onclick="filtroData()"><i class="fas fa-search"></i></div>
         </div>
     </div>
 
@@ -55,19 +58,38 @@
             });
         });
 
-        $('#data-final').change(function() {
-            console.log($('#data-inicial').val())
-            console.log($('#data-final').val())
-            $("#tabela tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf($('#data-final').val()) > -1)
-            });
+        // $('#data-final').change(function() {
+        //     filtroData();
+        // });
 
-            // $('.data').each(function(index, value) {
-            //     console.log(index + ':' + $(value).text());
-            //     console.log($(value).text() >= $('#data-final').val())                
-            // });
-        });
+        // $('#data-inicial').change(function() {
+        //     filtroData();
+        // });
     });
+
+    function filtroData() {
+        var inicial = $('#data-inicial').val()
+        var final = $('#data-final').val()
+
+        console.log(inicial)
+
+        if (inicial == '' || final == '') {
+            $("#tabela tbody tr").filter(function() {
+                $(this).toggle(true)
+            });
+        } else {
+            $("#tabela tbody tr").filter(function() {
+                var data_linha = $(this).find('.data').text().toLowerCase();
+                if (data_linha >= inicial && data_linha <= final) {
+                    $(this).toggle(true)
+                } else {
+                    $(this).toggle(false)
+                }
+            });
+        }
+
+
+    }
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
