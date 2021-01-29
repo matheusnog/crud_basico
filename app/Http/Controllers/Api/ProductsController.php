@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\SaleProduct;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,8 +15,43 @@ class ProductsController extends Controller
     {
         if ($request->pesquisa != '') {
             $prod = Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product');
+            $prod2 = Product::with('inputs.product');
+            $prod3 = Product::with('saleProducts.sale', 'saleProducts.product');
 
             if ($request->final && $request->inicial) {
+
+                // inputs                
+                $inputs = $prod2->whereHas('inputs', function (Builder $query) use ($request) {
+                    $query->where('date', '<=', $request->final);
+                    $query->where('date', '>=', $request->inicial);
+                })->with([
+                    'inputs' => function ($query) use ($request) {
+                        $query->where('date', '<=', $request->final);
+                        $query->where('date', '>=', $request->inicial);
+                    }
+                ]);
+
+                // saleProducts
+                $saleProducts = $prod3->whereHas('saleProducts', function (Builder $query) use ($request) {
+                    $query->whereHas('sale', function (Builder $query) use ($request) {
+                        $query->where('date', '>=', $request->inicial);
+                        $query->where('date', '<=', $request->final);
+                    });
+                })->with([
+                    'saleProducts' => function ($query) use ($request) {
+                        $query->whereHas('sale', function (Builder $query) use ($request) {
+                            $query->where('date', '>=', $request->inicial);
+                            $query->where('date', '<=', $request->final);
+                        });
+                    }
+                ]);
+
+                // exit($saleProducts->toSql());
+
+                //fazer dois arrays, um para inputs e um para saleProducts
+                // depois concatenar os dois num terceiro array ordenar e retornar
+
+                // inputs
                 $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
                     $query->where('date', '<=', $request->final);
                     $query->where('date', '>=', $request->inicial);
@@ -26,18 +62,7 @@ class ProductsController extends Controller
                     }
                 ]);
 
-                // exit($prod->toSql());
-
-                // $prod = $prod->whereHas('saleProducts.sale', function (Builder $query) use ($request) {
-                //     $query->where('date', '>=', $request->inicial);
-                //     $query->where('date', '<=', $request->final);
-                // })->with([
-                //     'saleProducts.sale' => function ($query) use ($request) {
-                //         $query->where('date', '>=', $request->inicial);
-                //         $query->where('date', '<=', $request->final);
-                //     }
-                // ]);
-
+                // saleProducts
                 $prod = $prod->whereHas('saleProducts', function (Builder $query) use ($request) {
                     $query->whereHas('sale', function (Builder $query) use ($request) {
                         $query->where('date', '>=', $request->inicial);
@@ -56,13 +81,14 @@ class ProductsController extends Controller
             if ($request->pesquisa)
                 $prod = $prod->where('name', 'LIKE', $request->pesquisa . '%');
 
-            exit($prod->toSql());
-
+            // exit($prod->toSql());
             // ctrl + k + u ==> descomentar
 
             $prod = $prod->get()->toArray();
+            $inputs = $inputs->get()->toArray();
+            $saleProducts = $saleProducts->get()->toArray();
 
-            return $prod;
+            return $saleProducts;
         } else {
             return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
         }
