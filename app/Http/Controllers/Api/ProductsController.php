@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -15,27 +16,46 @@ class ProductsController extends Controller
             $prod = Product::with('inputs.product', 'inputs', 'saleProducts.sale', 'saleProducts.product');
 
             if ($request->inicial)
-                $prod = $prod->where('inputs.date', '>=', $request->inicial);
+                // $prod = $prod->where('inputs.date', '>=', $request->inicial);
+                $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
+                    $query->where('date', '>=', $request->inicial);
+                });
 
             if ($request->final)
-                $prod = $prod->where('inputs.date', '<=', $request->final);
+                // $prod = $prod->where('inputs.date', '<=', $request->final);
+                $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
+                    $query->where('date', '<=', $request->final);
+                });
+
             // colocar wherehas
             if ($request->pesquisa)
                 $prod = $prod->where('name', 'LIKE', $request->pesquisa . '%');
 
-            exit($prod->toSql());
+            // exit($prod->toSql());
+
+            // ctrl + k + u ==> descomentar
+
+            // $users = DB::table('products')
+            //     ->join('inputs', function ($join) use ($request) {
+            //         $join->on('products.id', '=', 'inputs.product_id')
+            //             ->where('inputs.date', '>=', $request->inicial)
+            //             ->where('inputs.date', '<=', $request->final)
+            //             ->where('name', '<=', $request->pesquisa);
+            //     });            
+
+            // foreach ($prod as $p) {
+            //     foreach ($p->inputs as $input) {
+            //         if($input->date >= $request->inicial && $input->date <= $request->final){
+            //             $input->date = '';
+            //         }else{
+                        
+            //         }
+            //     }
+            // }
 
             $prod = $prod->get()->toArray();
 
             return $prod;
-
-            /*->where([
-                ['name', '=', $request->pesquisa],
-                // ['inputs.date', '>=', $request->inicial],
-                // ['inputs.date', '<=', $request->final],
-            ])->whereHas('inputs', function (Builder $query) {
-                $query->where('amount', '=', 66);
-            })->get()->toArray();*/
         } else {
             return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
         }
