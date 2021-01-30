@@ -66,8 +66,6 @@
         var final = $('#data-final').val()
         var pesquisa = $('#search').val()
 
-        var entrada = [];
-        var saida = [];
         $.ajax({
             type: "GET",
             url: 'http://127.0.0.1:8000/api/products',
@@ -79,39 +77,26 @@
             },
             success: function(data) {
                 console.log(data)
-                data.map(u => {
-                    u.inputs.map(inp => {
-                        entrada.push(inp);
-                    })
-
-                    u.sale_products.map(inp => {
-                        saida.push(inp);
-                    })
-                })
-
-                var entradaSaida = entrada.concat(saida);
-
-                // compara as datas para realizar o sort
-                function compare(a, b) {
-                    return a.created_at < b.created_at ? -1 : a.created_at > b.created_at ? 1 : 0;
-                }
-
-                entradaSaida.sort(compare);
-
                 $("#tabela-corpo").empty();
-
-                entradaSaida.map(inp => {
+                data.map(inp => {
                     $table = "<tr>";
-                    $table += "<td " + (inp.date != null ? "class='bg-success'>Entrada" : "class='bg-danger'>Saída") + "</td>";
-                    $table += "<td class='data'>" + (inp.date != null ? inp.date : inp.sale.date) + "</td>";
-                    $table += "<td class='nome'>" + inp.product.name + "</td>";
-                    $table += "<td>" + inp.amount + "</td>";
-                    $table += "<td>" + inp.before_amount + "</td>";
-                    $table += "<td>" + inp.after_amount + "</td>";
-                    $table += "<td>" + formatter.format(inp.unitary_value) + "</td>";
-                    $table += "<td>" + formatter.format(inp.total_value) + "</td></tr>";
+                    if (inp.inputs != null) {
+                        inp.inputs.map(put => {
+                            $table += "<td>" + put.amount + "</td>";
+                        })
+                    }
+                    // $table += "<td " + (inp.date != null ? "class='bg-success'>Entrada" : "class='bg-danger'>Saída") + "</td>";
+                    // $table += "<td class='data'>" + (inp.date != null ? inp.date : inp.sale.date) + "</td>";
+                    // $table += "<td class='nome'>" + inp.product.name + "</td>";
+                    // $table += "<td>" + inp.amount + "</td>";
+                    // $table += "<td>" + inp.before_amount + "</td>";
+                    // $table += "<td>" + inp.after_amount + "</td>";
+                    // $table += "<td>" + formatter.format(inp.unitary_value) + "</td>";
+                    // $table += "<td>" + formatter.format(inp.total_value) + "</td></tr>";
+                    $table += "<td>" + inp.name + "</td></tr>"
                     $('#tabela-corpo').append($table);
                 })
+
             },
             error: function() {
                 alert("Erro ao realizar a requisicao")
@@ -138,6 +123,7 @@
             url: 'http://127.0.0.1:8000/api/products',
             dataType: 'json',
             success: function(data) {
+                console.log(data)
                 data.map(u => {
                     u.inputs.map(inp => {
                         entrada.push(inp);

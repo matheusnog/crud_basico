@@ -19,8 +19,7 @@ class ProductsController extends Controller
             $prod3 = Product::with('saleProducts.sale', 'saleProducts.product');
 
             if ($request->final && $request->inicial) {
-
-                // inputs                
+                   
                 $inputs = $prod2->whereHas('inputs', function (Builder $query) use ($request) {
                     $query->where('date', '<=', $request->final);
                     $query->where('date', '>=', $request->inicial);
@@ -30,8 +29,7 @@ class ProductsController extends Controller
                         $query->where('date', '>=', $request->inicial);
                     }
                 ]);
-
-                // saleProducts
+                
                 $saleProducts = $prod3->whereHas('saleProducts', function (Builder $query) use ($request) {
                     $query->whereHas('sale', function (Builder $query) use ($request) {
                         $query->where('date', '>=', $request->inicial);
@@ -50,32 +48,33 @@ class ProductsController extends Controller
 
                 //fazer dois arrays, um para inputs e um para saleProducts
                 // depois concatenar os dois num terceiro array ordenar e retornar
+                
 
-                // inputs
-                $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
-                    $query->where('date', '<=', $request->final);
-                    $query->where('date', '>=', $request->inicial);
-                })->with([
-                    'inputs' => function ($query) use ($request) {
-                        $query->where('date', '<=', $request->final);
-                        $query->where('date', '>=', $request->inicial);
-                    }
-                ]);
+                // funcionando parcialmente:
 
-                // saleProducts
-                $prod = $prod->whereHas('saleProducts', function (Builder $query) use ($request) {
-                    $query->whereHas('sale', function (Builder $query) use ($request) {
-                        $query->where('date', '>=', $request->inicial);
-                        $query->where('date', '<=', $request->final);
-                    });
-                })->with([
-                    'saleProducts' => function ($query) use ($request) {
-                        $query->whereHas('sale', function (Builder $query) use ($request) {
-                            $query->where('date', '>=', $request->inicial);
-                            $query->where('date', '<=', $request->final);
-                        });
-                    }
-                ]);
+                // $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
+                //     $query->where('date', '<=', $request->final);
+                //     $query->where('date', '>=', $request->inicial);
+                // })->with([
+                //     'inputs' => function ($query) use ($request) {
+                //         $query->where('date', '<=', $request->final);
+                //         $query->where('date', '>=', $request->inicial);
+                //     }
+                // ]);
+                
+                // $prod = $prod->whereHas('saleProducts', function (Builder $query) use ($request) {
+                //     $query->whereHas('sale', function (Builder $query) use ($request) {
+                //         $query->where('date', '>=', $request->inicial);
+                //         $query->where('date', '<=', $request->final);
+                //     });
+                // })->with([
+                //     'saleProducts' => function ($query) use ($request) {
+                //         $query->whereHas('sale', function (Builder $query) use ($request) {
+                //             $query->where('date', '>=', $request->inicial);
+                //             $query->where('date', '<=', $request->final);
+                //         });
+                //     }
+                // ]);
             }
 
             if ($request->pesquisa)
@@ -84,11 +83,12 @@ class ProductsController extends Controller
             // exit($prod->toSql());
             // ctrl + k + u ==> descomentar
 
-            $prod = $prod->get()->toArray();
+            // $prod = $prod->get()->toArray();
             $inputs = $inputs->get()->toArray();
             $saleProducts = $saleProducts->get()->toArray();
+            $entradaSaida = array_merge($inputs, $saleProducts);
 
-            return $saleProducts;
+            return $entradaSaida;
         } else {
             return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
         }
