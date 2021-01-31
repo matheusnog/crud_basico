@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Input;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\SaleProduct;
@@ -18,25 +19,44 @@ class ProductsController extends Controller
             $prod2 = Product::with('inputs.product');
             $prod3 = Product::with('saleProducts.sale', 'saleProducts.product');
 
+            $inp = Input::with('product');
+
             if ($request->final && $request->inicial) {
-                   
+
+                // pegando diretamente o input, sem acessar pelo produto
+                $inp = $inp->where('date', '<=', $request->final)
+                    ->where('date', '>=', $request->inicial);
+
+
                 $inputs = $prod2->whereHas('inputs', function (Builder $query) use ($request) {
+                    $query->whereHas('product', function (Builder $query) use ($request) {
+                        $query->where('name', 'LIKE', $request->pesquisa . '%');
+                    });
                     $query->where('date', '<=', $request->final);
                     $query->where('date', '>=', $request->inicial);
                 })->with([
                     'inputs' => function ($query) use ($request) {
+                        $query->whereHas('product', function (Builder $query) use ($request) {
+                            $query->where('name', 'LIKE', $request->pesquisa . '%');
+                        });
                         $query->where('date', '<=', $request->final);
                         $query->where('date', '>=', $request->inicial);
                     }
                 ]);
-                
+
                 $saleProducts = $prod3->whereHas('saleProducts', function (Builder $query) use ($request) {
+                    $query->whereHas('product', function (Builder $query) use ($request) {
+                        $query->where('name', 'LIKE', $request->pesquisa . '%');
+                    });
                     $query->whereHas('sale', function (Builder $query) use ($request) {
                         $query->where('date', '>=', $request->inicial);
                         $query->where('date', '<=', $request->final);
                     });
                 })->with([
                     'saleProducts' => function ($query) use ($request) {
+                        $query->whereHas('product', function (Builder $query) use ($request) {
+                            $query->where('name', 'LIKE', $request->pesquisa . '%');
+                        });
                         $query->whereHas('sale', function (Builder $query) use ($request) {
                             $query->where('date', '>=', $request->inicial);
                             $query->where('date', '<=', $request->final);
@@ -48,7 +68,6 @@ class ProductsController extends Controller
 
                 //fazer dois arrays, um para inputs e um para saleProducts
                 // depois concatenar os dois num terceiro array ordenar e retornar
-                
 
                 // funcionando parcialmente:
 
@@ -61,7 +80,7 @@ class ProductsController extends Controller
                 //         $query->where('date', '>=', $request->inicial);
                 //     }
                 // ]);
-                
+
                 // $prod = $prod->whereHas('saleProducts', function (Builder $query) use ($request) {
                 //     $query->whereHas('sale', function (Builder $query) use ($request) {
                 //         $query->where('date', '>=', $request->inicial);
@@ -77,8 +96,8 @@ class ProductsController extends Controller
                 // ]);
             }
 
-            if ($request->pesquisa)
-                $prod = $prod->where('name', 'LIKE', $request->pesquisa . '%');
+            // if ($request->pesquisa)
+            //     $prod = $prod->where('name', 'LIKE', $request->pesquisa . '%');
 
             // exit($prod->toSql());
             // ctrl + k + u ==> descomentar
@@ -87,6 +106,9 @@ class ProductsController extends Controller
             $inputs = $inputs->get()->toArray();
             $saleProducts = $saleProducts->get()->toArray();
             $entradaSaida = array_merge($inputs, $saleProducts);
+
+            $inp = $inp->get()->toArray();
+            return $inp;
 
             return $entradaSaida;
         } else {

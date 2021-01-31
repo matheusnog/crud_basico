@@ -82,7 +82,29 @@
                     $table = "<tr>";
                     if (inp.inputs != null) {
                         inp.inputs.map(put => {
+                            $table += "<td class='bg-success'>Entrada</td>";
+                            $table += "<td>" + put.date + "</td>";
+                            $table += "<td>" + put.product.name + "</td>";
                             $table += "<td>" + put.amount + "</td>";
+                            $table += "<td>" + put.before_amount + "</td>";
+                            $table += "<td>" + put.after_amount + "</td>";
+                            $table += "<td>" + formatter.format(put.unitary_value) + "</td>";
+                            $table += "<td>" + formatter.format(put.total_value) + "</td>";
+                            $table += "</tr>"
+                        })
+                    }
+
+                    if (inp.sale_products != null) {
+                        inp.sale_products.map(put => {
+                            $table += "<td class='bg-danger'>Saída</td>";
+                            $table += "<td>" + put.sale.date + "</td>";
+                            $table += "<td>" + put.product.name + "</td>";
+                            $table += "<td>" + put.amount + "</td>";
+                            $table += "<td>" + put.before_amount + "</td>";
+                            $table += "<td>" + put.after_amount + "</td>";
+                            $table += "<td>" + formatter.format(put.unitary_value) + "</td>";
+                            $table += "<td>" + formatter.format(put.total_value) + "</td>";
+                            $table += "</tr>"
                         })
                     }
                     // $table += "<td " + (inp.date != null ? "class='bg-success'>Entrada" : "class='bg-danger'>Saída") + "</td>";
@@ -93,7 +115,7 @@
                     // $table += "<td>" + inp.after_amount + "</td>";
                     // $table += "<td>" + formatter.format(inp.unitary_value) + "</td>";
                     // $table += "<td>" + formatter.format(inp.total_value) + "</td></tr>";
-                    $table += "<td>" + inp.name + "</td></tr>"
+                    
                     $('#tabela-corpo').append($table);
                 })
 
