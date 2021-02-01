@@ -16,61 +16,44 @@ class ProductsController extends Controller
     {
         if ($request->pesquisa != '') {
             $prod = Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product');
-            $prod2 = Product::with('inputs.product');
-            $prod3 = Product::with('saleProducts.sale', 'saleProducts.product');
 
             $inp = Input::with('product');
+            $salProd = SaleProduct::with('product');
 
             if ($request->final && $request->inicial) {
 
                 // pegando diretamente o input, sem acessar pelo produto
                 $inp = $inp->where('date', '<=', $request->final)
-                    ->where('date', '>=', $request->inicial);
-
-
-                $inputs = $prod2->whereHas('inputs', function (Builder $query) use ($request) {
-                    $query->whereHas('product', function (Builder $query) use ($request) {
+                    ->where('date', '>=', $request->inicial)
+                    ->whereHas('product', function (Builder $query) use ($request) {
                         $query->where('name', 'LIKE', $request->pesquisa . '%');
-                    });
+                    })->with([
+                        'product' => function ($query) use ($request) {
+                            $query->where('name', 'LIKE', $request->pesquisa . '%');
+                        }
+                    ]);
+
+                $salProd = $salProd->whereHas('sale', function ($query) use ($request) {
                     $query->where('date', '<=', $request->final);
                     $query->where('date', '>=', $request->inicial);
                 })->with([
-                    'inputs' => function ($query) use ($request) {
-                        $query->whereHas('product', function (Builder $query) use ($request) {
-                            $query->where('name', 'LIKE', $request->pesquisa . '%');
-                        });
+                    'sale' => function ($query) use ($request) {
                         $query->where('date', '<=', $request->final);
                         $query->where('date', '>=', $request->inicial);
                     }
-                ]);
-
-                $saleProducts = $prod3->whereHas('saleProducts', function (Builder $query) use ($request) {
-                    $query->whereHas('product', function (Builder $query) use ($request) {
+                ])
+                    ->whereHas('product', function ($query) use ($request) {
                         $query->where('name', 'LIKE', $request->pesquisa . '%');
-                    });
-                    $query->whereHas('sale', function (Builder $query) use ($request) {
-                        $query->where('date', '>=', $request->inicial);
-                        $query->where('date', '<=', $request->final);
-                    });
-                })->with([
-                    'saleProducts' => function ($query) use ($request) {
-                        $query->whereHas('product', function (Builder $query) use ($request) {
+                    })->with([
+                        'product' => function ($query) use ($request) {
                             $query->where('name', 'LIKE', $request->pesquisa . '%');
-                        });
-                        $query->whereHas('sale', function (Builder $query) use ($request) {
-                            $query->where('date', '>=', $request->inicial);
-                            $query->where('date', '<=', $request->final);
-                        });
-                    }
-                ]);
+                        }
+                    ]);
 
                 // exit($saleProducts->toSql());
-
-                //fazer dois arrays, um para inputs e um para saleProducts
-                // depois concatenar os dois num terceiro array ordenar e retornar
+                //fazer dois arrays, um para inputs e um para saleProducts depois concatenar os dois num terceiro array, ordenar e retornar
 
                 // funcionando parcialmente:
-
                 // $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
                 //     $query->where('date', '<=', $request->final);
                 //     $query->where('date', '>=', $request->inicial);
@@ -103,12 +86,18 @@ class ProductsController extends Controller
             // ctrl + k + u ==> descomentar
 
             // $prod = $prod->get()->toArray();
-            $inputs = $inputs->get()->toArray();
-            $saleProducts = $saleProducts->get()->toArray();
-            $entradaSaida = array_merge($inputs, $saleProducts);
 
             $inp = $inp->get()->toArray();
-            return $inp;
+            $salProd = $salProd->get()->toArray();
+            $entradaSaida = array_merge($inp, $salProd);
+
+            usort(
+                $entradaSaida,
+                function ($a, $b) {
+                    if ($a['created_at'] == $b['created_at']) return 0;
+                    return (($a['created_at'] < $b['created_at']) ? -1 : 1);
+                }
+            );
 
             return $entradaSaida;
         } else {
