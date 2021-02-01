@@ -28,7 +28,7 @@
                     <a class="nav-item nav-link" href="/inputs/list">Entradas</a>
                     <a class="nav-item nav-link" href="/sales/list">Vendas</a>
                     <a class="nav-item nav-link" href="/users/list">Usuários</a>
-                    <a class="nav-item nav-link" href="/products/show">Entradas e saídas</a>
+                    <a class="nav-item nav-link" href="/products/lista">Entradas e saídas</a>
                 </div>
             </div>
         </nav>

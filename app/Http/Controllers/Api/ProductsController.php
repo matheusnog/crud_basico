@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\SaleProduct;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -21,7 +20,7 @@ class ProductsController extends Controller
             $salProd = SaleProduct::with('product');
 
             if ($request->final && $request->inicial) {
-
+                //ok - fazer dois arrays, um para inputs e um para saleProducts depois concatenar os dois num terceiro array, ordenar e retornar
                 // pegando diretamente o input, sem acessar pelo produto
                 $inp = $inp->where('date', '<=', $request->final)
                     ->where('date', '>=', $request->inicial)
@@ -32,6 +31,7 @@ class ProductsController extends Controller
                             $query->where('name', 'LIKE', $request->pesquisa . '%');
                         }
                     ]);
+                // exit($inp->toSql());
 
                 $salProd = $salProd->whereHas('sale', function ($query) use ($request) {
                     $query->where('date', '<=', $request->final);
@@ -50,10 +50,8 @@ class ProductsController extends Controller
                         }
                     ]);
 
-                // exit($saleProducts->toSql());
-                //fazer dois arrays, um para inputs e um para saleProducts depois concatenar os dois num terceiro array, ordenar e retornar
+                // exit($salProd->toSql());
 
-                // funcionando parcialmente:
                 // $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
                 //     $query->where('date', '<=', $request->final);
                 //     $query->where('date', '>=', $request->inicial);
@@ -101,8 +99,27 @@ class ProductsController extends Controller
 
             return $entradaSaida;
         } else {
-            return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
+            $inp = Input::with('product');
+            $salProd = SaleProduct::with('product', 'sale');
+            $inp = $inp->get()->toArray();
+            $salProd = $salProd->get()->toArray();
+            $entradaSaida = array_merge($inp, $salProd);
+
+            usort(
+                $entradaSaida,
+                function ($a, $b) {
+                    if ($a['created_at'] == $b['created_at']) return 0;
+                    return (($a['created_at'] < $b['created_at']) ? -1 : 1);
+                }
+            );
+
+            return $entradaSaida;
         }
+    }
+
+    public function getAllTeste()
+    {
+        return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
     }
 
     public function get($id)

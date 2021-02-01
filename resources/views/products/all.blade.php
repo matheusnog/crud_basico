@@ -107,7 +107,7 @@
         var saida = [];
         $.ajax({
             type: "GET",
-            url: 'http://127.0.0.1:8000/api/products',
+            url: 'http://127.0.0.1:8000/api/products/teste',
             dataType: 'json',
             success: function(data) {
                 data.map(u => {
@@ -129,8 +129,7 @@
 
                 entradaSaida.sort(compare);
 
-                entradaSaida.map(inp => {
-                    // console.log(inp)
+                entradaSaida.map(inp => {                    
                     $table = "<tr>";
                     $table += "<td " + (inp.date != null ? "class='bg-success'>Entrada" : "class='bg-danger'>Saída") + "</td>";
                     $table += "<td class='data'>" + (inp.date != null ? inp.date : inp.sale.date) + "</td>";
