@@ -32,7 +32,7 @@
 
         $.ajax({
             type: "POST",
-            url: 'http://127.0.0.1:8000/api/products',
+            url: 'http://127.0.0.1:8000/api/products/',
             dataType: 'json',
             data: {
                 'name': name,

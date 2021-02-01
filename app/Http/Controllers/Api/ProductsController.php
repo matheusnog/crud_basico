@@ -96,7 +96,6 @@ class ProductsController extends Controller
                     return (($a['created_at'] < $b['created_at']) ? -1 : 1);
                 }
             );
-
             return $entradaSaida;
         } else {
             $inp = Input::with('product');
@@ -112,7 +111,6 @@ class ProductsController extends Controller
                     return (($a['created_at'] < $b['created_at']) ? -1 : 1);
                 }
             );
-
             return $entradaSaida;
         }
     }
